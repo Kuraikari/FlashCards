@@ -1,0 +1,48 @@
+﻿@using FlashCards.Models.FlashCards;
+@model IEnumerable<FlashCardModel>
+
+     
+<div class="actions">
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Create New</a>
+    </p>
+    <p>
+        <a asp-action="FlashCard" class="btn btn-outline-primary">Flashcard View</a>
+    </p>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Topics)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Front)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Back)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var card in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => card.Topics)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => card.Front)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => card.Back)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@card.Id">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

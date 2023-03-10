@@ -1,0 +1,28 @@
+﻿@model FlashCards.Models.FlashCards.FlashCardModel
+
+<h2>Create</h2>
+
+<form asp-action="Create">
+    <div class="form-group">
+        <label asp-for="Topics" class="control-label"></label>
+        @Html.DropDownListFor(m => m.Topics, new SelectList(Enum.GetValues<FlashCards.Enums.Topics>()), "Select Topic")
+        <span asp-validation-for="Topics" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Front" class="control-label"></label>
+        <input asp-for="Front" class="form-control"/>
+        <span asp-validation-for="Front" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Back" class="control-label"></label>
+        <input asp-for="Back" class="form-control" />
+        <span asp-validation-for="Back" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
