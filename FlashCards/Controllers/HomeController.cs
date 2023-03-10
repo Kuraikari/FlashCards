@@ -22,10 +22,18 @@ namespace FlashCards.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1, int top = 25)
         {
-            var flashcards = await _context.FlashCards.ToListAsync();
-            return View(flashcards);
+            var flashcards                                  = await _context.FlashCards.ToListAsync();
+            FlashCardsViewModel<FlashCardModel> viewModel   = new()
+            {
+                TotalRecords    = flashcards.Count,
+                PageSize        = top,
+                PageNumber      = page,
+                Data            = flashcards.Skip((page - 1) * top).Take(top).ToList()
+            };
+
+            return View(viewModel);
         }
 
         public IActionResult Create()
