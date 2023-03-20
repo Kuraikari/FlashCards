@@ -1,11 +1,13 @@
 ﻿@model IEnumerable<FlashCards.Models.FlashCards.FlashCardModel>
 
-<div class="flashcard-wrapper">
+<div class="flashcard-container">
 @foreach (var card in Model)
 {
     <div class="flashcard">
-        <div class="front">@card.Front</div>
-        <div class="back">@card.Back</div>
+        <div class="flashcard-inner">
+            <div class="front">@card.Front</div>
+            <div class="back">@card.Back</div>
+        </div>
     </div>
 }
 </div>

@@ -31,6 +31,14 @@
         </nav>
     </header>
     <div class="container">
+        <div class="actions">
+            <p>
+                <a asp-action="Create" class="btn btn-primary">Create New</a>
+            </p>
+            <p>
+                <a asp-action="FlashCard" class="btn btn-outline-primary">Flashcard View</a>
+            </p>
+        </div>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

@@ -109,7 +109,7 @@ namespace FlashCards.Controllers
 
         public async Task<IActionResult> FlashCard()
         {
-            var flashcards = _context.FlashCards.Where(x => x.Topics == Topics.Language).ToList();
+            var flashcards = await _context.FlashCards.Where(x => x.Topics == Topics.Language).ToListAsync();
             return View(flashcards);
         }
 

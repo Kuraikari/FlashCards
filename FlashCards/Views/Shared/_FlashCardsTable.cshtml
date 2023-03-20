@@ -1,0 +1,68 @@
+﻿@using FlashCards.Models.FlashCards;
+@model FlashCardsViewModel<FlashCardModel>
+
+@{
+    var data = Model.Data;
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.First().Topics)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.First().Front)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.First().Back)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var card in data)
+        {
+            <tr>
+                <th>
+                    @Html.DisplayFor(modelItem => card.Id)
+                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => card.Topics)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => card.Front)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => card.Back)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@card.Id">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="pagination">
+    @if (Model.HasPreviousPage)
+    {
+        <div class="prev">
+            <a asp-action="Index" asp-route-top="@Model.PageSize" asp-route-page="@(Model.PageNumber - 1)"><span class="pagination-prev"></span></a>
+        </div>
+    }
+
+    @for (int i = 0; i < Model.TotalPages; i++)
+    {
+        <div class="pagination-page">
+            <a asp-action="Index" asp-route-top="@Model.PageSize" asp-route-page="@(i + 1)"><span class="dot">@(i + 1)</span></a>
+        </div>
+    }
+
+    @if (Model.HasNextPage)
+    {
+        <div class="next">
+            <a asp-action="Index" asp-route-top="@Model.PageSize" asp-route-page="@(Model.PageNumber + 1)"><span class="pagination-next"></span></a>
+        </div>
+    }
+</div>

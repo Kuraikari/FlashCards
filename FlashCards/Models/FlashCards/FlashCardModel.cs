@@ -7,9 +7,10 @@ namespace FlashCards.Models.FlashCards
     {
         public int Id { get; set; }
         public Topics Topics { get; set; }
+        //public string SubTopics { get; set; }   = string.Empty;
         [Required]
-        public string Front { get; set; }  = string.Empty;
+        public string Front { get; set; }       = string.Empty;
         [Required]
-        public string Back { get; set; } = string.Empty;   
+        public string Back { get; set; }        = string.Empty;   
     }
 }

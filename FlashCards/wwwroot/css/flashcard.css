@@ -1,4 +1,4 @@
-﻿.flashcard-wrapper {
+﻿.flashcard-container {
     display: flex;
     -ms-flex-direction: row;
     -webkit-flex-direction: row;
@@ -13,62 +13,58 @@
 }
 
 .flashcard {
+    background-color: transparent;
     width: 270px;
     height: 190px;
-    position: relative;
     perspective: 1000px;
-    border: solid 0.5px rgba(100, 100, 100, 0.5);
-    transition: ease-in-out 1s;
     margin-right: 2ch;
     margin-bottom: 2ch;
 }
 
-    .flashcard .front, .flashcard .back {
+    .flashcard .flashcard-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: ease-in-out 0.25s;
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+        border: solid 0.5px rgba(100, 100, 100, 0.5);
+    }
+
+    .flashcard.flipped .flashcard-inner {
+        -moz-transform: rotateY(180deg);
+        -ms-transform: rotateY(180deg);
+        -o-transform: rotateY(180deg);
+        -webkit-transform: rotateY(180deg);
+        transform: rotateY(180deg);
+    }
+
+    .flashcard .flashcard-inner .front,
+    .flashcard .flashcard-inner .back {
         position: absolute;
         width: 100%;
         height: 100%;
+
+        display: flex;
+        -webkit-align-items: center;
+        align-items: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+
         -moz-backface-visibility: hidden;
         -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
     }
 
-    .flashcard .front {
-        background-color: white;
-        display: flex;
-        -webkit-align-items: center;
-        align-items: center;
-        -webkit-justify-content: center;
-        justify-content: center;
-    }
+        .flashcard .flashcard-inner .front {
+            background-color: white;
+        }
 
-    .flashcard .back {
-        background-color: #f5f5f5;
-
-        -moz-transform: rotateY(180deg);
-        -ms-transform: rotateY(180deg);
-        -o-transform: rotateY(180deg);
-        -webkit-transform: rotateY(180deg);
-        transform: rotateY(180deg);
-
-        display: flex;
-        -webkit-align-items: center;
-        align-items: center;
-        -webkit-justify-content: center;
-        justify-content: center;
-    }
-
-    .flashcard.flipped .front {
-        -moz-transform: rotateY(180deg);
-        -ms-transform: rotateY(180deg);
-        -o-transform: rotateY(180deg);
-        -webkit-transform: rotateY(180deg);
-        transform: rotateY(180deg);
-    }
-
-    .flashcard.flipped .back {
-        -moz-transform: rotateY(0deg);
-        -ms-transform: rotateY(0deg);
-        -o-transform: rotateY(0deg);
-        -webkit-transform: rotateY(0deg);
-        transform: rotateY(0deg);
-    }
+        .flashcard .flashcard-inner .back {
+            background-color: #f5f5f5;
+            -moz-transform: rotateY(180deg);
+            -ms-transform: rotateY(180deg);
+            -o-transform: rotateY(180deg);
+            -webkit-transform: rotateY(180deg);
+            transform: rotateY(180deg);
+        }
