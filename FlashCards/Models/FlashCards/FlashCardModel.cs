@@ -1,16 +1,18 @@
 ﻿using FlashCards.Enums;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace FlashCards.Models.FlashCards
 {
+    [PrimaryKey("Id")]
     public class FlashCardModel
     {
         public int Id { get; set; }
         public Topics Topics { get; set; }
-        //public string SubTopics { get; set; }   = string.Empty;
+        public string SubTopics { get; set; }           = string.Empty;
         [Required]
-        public string Front { get; set; }       = string.Empty;
+        public FlashCardSideModel Front { get; set; }        = new FlashCardSideModel();
         [Required]
-        public string Back { get; set; }        = string.Empty;   
+        public FlashCardSideModel Back { get; set; }         = new FlashCardSideModel();   
     }
 }

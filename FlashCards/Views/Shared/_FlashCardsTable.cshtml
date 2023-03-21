@@ -1,46 +1,59 @@
 ﻿@using FlashCards.Models.FlashCards;
 @model FlashCardsViewModel<FlashCardModel>
 
-@{
-    var data = Model.Data;
-}
-
 <table class="table">
     <thead>
-        <tr>
-            <th>ID</th>
-            <th>
+        <tr role="row" scope="col">
+            <th role="columnheader">
+                @Html.DisplayNameFor(model => model.Data.First().Id)
+            </th>
+            <th role="columnheader">
                 @Html.DisplayNameFor(model => model.Data.First().Topics)
             </th>
-            <th>
+            <th role="columnheader">
+                @Html.DisplayNameFor(model => model.Data.First().SubTopics)
+            </th>
+            <th role="columnheader">
                 @Html.DisplayNameFor(model => model.Data.First().Front)
             </th>
-            <th>
+            <th role="columnheader">
                 @Html.DisplayNameFor(model => model.Data.First().Back)
             </th>
-            <th></th>
+            <th role="columnheader"></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var card in data)
+        @if (Model.Data.Count() > 0)
         {
-            <tr>
-                <th>
-                    @Html.DisplayFor(modelItem => card.Id)
-                </th>
-                <td>
-                    @Html.DisplayFor(modelItem => card.Topics)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => card.Front)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => card.Back)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@card.Id">Edit</a>
-                </td>
-            </tr>
+            foreach (var card in Model.Data)
+            {
+                <tr role="row" scope="row">
+                    <th role="rowheader">
+                        @Html.DisplayFor(modelItem => card.Id)
+                    </th>
+                    <td scope="col">
+                        @Html.DisplayFor(modelItem => card.Topics)
+                    </td>
+                    <td scope="col">
+                        @Html.DisplayFor(modelItem => card.SubTopics)
+                    </td>
+                    <td scope="col">
+                        @for(int i = 0; i < card.Front.Content.Count(); i++)
+                        {
+                            <span>@(card.Front.Content[i])</span>
+                        }
+                    </td>
+                    <td scope="col">
+                        @for (int i = 0; i < card.Back.Content.Count(); i++)
+                        {
+                            <span>@(card.Back.Content[i])</span>
+                        }
+                    </td>
+                    <td scope="col">
+                        <a asp-action="Edit" asp-route-id="@card.Id">Edit</a>
+                    </td>
+                </tr>
+            }
         }
     </tbody>
 </table>

@@ -3,6 +3,7 @@
 <h2>Edit</h2>
 
 <form asp-action="Edit">
+    <div asp-validation.summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
         <input type="hidden" asp-for="Id" />
         <label asp-for="Topics" class="control-label"></label>
@@ -10,14 +11,41 @@
         <span asp-validation-for="Topics" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Front" class="control-label"></label>
-        <input asp-for="Front" class="form-control" />
-        <span asp-validation-for="Front" class="text-danger"></span>
+        <label asp-for="SubTopics" class="form-label"></label>
+        @Html.TextBoxFor(m => m.SubTopics, new {@class = "form-control form-control-text" })
+        <span asp-validation-for="SubTopics"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Back" class="control-label"></label>
-        <input asp-for="Back" class="form-control" />
-        <span asp-validation-for="Back" class="text-danger"></span>
+        <table id="AddFrontContentTable">
+            <tr>
+                <th>@Html.DisplayNameFor(model=>model.Front)</th>
+            </tr>
+            @for(int i = 0; i < Model.Front.Content.Count(); i++)
+            {
+                <tr>
+                    <td>
+                        @Html.TextBoxFor(m => m.Front.Content[i], new {@class = "form-control form-control-text" })
+                    </td>
+                </tr>
+            }
+        </table>
+        <button onclick="addRowFront()" type="button" class="btn btn-secondary">Add new Content</button>
+    </div>
+    <div class="form-group">
+        <table id="AddBackContentTable">
+            <tr>
+                <th>@Html.DisplayNameFor(model=>model.Back)</th>
+            </tr>
+            @for (int i = 0; i < Model.Back.Content.Count(); i++)
+            {
+                <tr>
+                    <td>
+                        @Html.TextBoxFor(m => m.Back.Content[i], new {@class = "form-control form-control-text" })
+                    </td>
+                </tr>
+            }
+        </table>
+        <button onclick="addRowBack()" type="button" class="btn btn-secondary">Add new Content</button>
     </div>
     <div class="form-group">
         <input type="submit" value="Save" class="btn btn-primary" />
@@ -27,3 +55,26 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+@section Scripts {
+    <script>
+        var counterFront = 0;
+        var inputClass = 'class="form-control form-control-text"';
+        function addRowFront() {
+            var table = document.getElementById("AddFrontContentTable");
+            var row = table.insertRow(-1);
+            var cell1 = row.insertCell(0);
+            cell1.innerHTML = `<input type="text" ${inputClass} name="Front.Content['${counterFront}']"/>`;
+            counterFront++;
+        }
+
+        var counterBack = 0;
+        function addRowBack() {
+            var table = document.getElementById("AddBackContentTable");
+            var row = table.insertRow(-1);
+            var cell1 = row.insertCell(0);
+            cell1.innerHTML = `<input type="text" ${inputClass} name="Back.Content['${counterFront}']"/>`;
+            counterBack++;
+        }
+    </script>
+}

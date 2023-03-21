@@ -24,6 +24,7 @@ namespace FlashCards.Controllers
 
         public async Task<IActionResult> Index(int page = 1, int top = 25)
         {
+            var flashcardSides                              = await _context.FlashCardSides.ToListAsync();
             var flashcards                                  = await _context.FlashCards.ToListAsync();
             FlashCardsViewModel<FlashCardModel> viewModel   = new()
             {
@@ -32,18 +33,19 @@ namespace FlashCards.Controllers
                 PageNumber      = page,
                 Data            = flashcards.Skip((page - 1) * top).Take(top).ToList()
             };
-
+            ViewBag.Title = "Home";
             return View(viewModel);
         }
 
         public IActionResult Create()
         {
+            ViewBag.Title = "Create";
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Topics,Front,Back")] FlashCardModel flashcard)
+        public async Task<IActionResult> Create(FlashCardModel flashcard)
         {
             if (ModelState.IsValid)
             {
@@ -56,12 +58,14 @@ namespace FlashCards.Controllers
 
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.Title = "Edit";
             if (id == null)
             {
                 return NotFound();
             }
 
-            var flashcard = await _context.FlashCards.FindAsync(id);
+            var flashcardSides  = await _context.FlashCardSides.ToListAsync();
+            var flashcard       = await _context.FlashCards.FindAsync(id);
             if (flashcard == null)
             {
                 return NotFound();
@@ -72,7 +76,7 @@ namespace FlashCards.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, [Bind("Id,Topics,Front,Back")] FlashCardModel flashcard)
+        public async Task<IActionResult> Edit(int? id, [Bind("Id,Topics,SubTopics,Front,Back")] FlashCardModel flashcard)
         {
             if (id != flashcard.Id)
             {
@@ -88,7 +92,7 @@ namespace FlashCards.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if(!FlashCardExists(flashcard.Id))
+                    if(!FlashCardExists(flashcard.Id) || FlashCardSideExists(flashcard.Front.Id))
                     {
                         return NotFound();
                     }
@@ -109,6 +113,8 @@ namespace FlashCards.Controllers
 
         public async Task<IActionResult> FlashCard()
         {
+            ViewBag.Title = "View";
+            var flashcardSides = await _context.FlashCardSides.ToListAsync();
             var flashcards = await _context.FlashCards.Where(x => x.Topics == Topics.Language).ToListAsync();
             return View(flashcards);
         }
@@ -122,6 +128,11 @@ namespace FlashCards.Controllers
         private bool FlashCardExists(int id)
         {
             return _context.FlashCards.Any(e => e.Id == id);
+        }
+
+        private bool FlashCardSideExists(int id)
+        {
+            return _context.FlashCardSides.Any(e => e.Id == id);
         }
     }
 }

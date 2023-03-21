@@ -102,3 +102,8 @@ body {
     display: block;
     transform: translateY(-4px) translateX(1px);
 }
+
+.table td span::after {
+    content: "\a";
+    white-space: pre;
+}

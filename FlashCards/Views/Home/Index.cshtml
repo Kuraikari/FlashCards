@@ -1,6 +1,6 @@
 ﻿@using FlashCards.Models.FlashCards;
 @model FlashCardsViewModel<FlashCardModel>
 
-<article class="flashcard-table">
-    @Html.RenderPartialAsync("_FlashCardsTable", Model);
+<article class="flashcard-table" role="article">
+    @{await Html.RenderPartialAsync("_FlashCardsTable", Model);}
 </article>

@@ -5,8 +5,18 @@
 {
     <div class="flashcard">
         <div class="flashcard-inner">
-            <div class="front">@card.Front</div>
-            <div class="back">@card.Back</div>
+            <div class="front">
+                @foreach (var content in card.Front.Content)
+                {
+                    <span>@content</span>
+                }
+            </div>
+            <div class="back">
+                @foreach (var content in card.Back.Content)
+                {
+                    <span>@content</span>
+                }
+            </div>
         </div>
     </div>
 }

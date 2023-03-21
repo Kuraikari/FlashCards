@@ -21,6 +21,17 @@ namespace FlashCards.Services
             }
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<FlashCardSideModel>()
+                .Property(s => s.Content)
+                .HasConversion(
+                    v => string.Join(',', v),
+                    v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
+            modelBuilder.Entity<FlashCardModel>();
+        }
+
         public DbSet<FlashCardModel> FlashCards { get; set; }
+        public DbSet<FlashCardSideModel> FlashCardSides { get; set; }
     }
 }
