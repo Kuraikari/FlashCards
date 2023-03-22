@@ -15,6 +15,8 @@ namespace FlashCards.Models
         public FlashCardsViewModel()
         {
             Data = new List<T>();
+            Filter = new("");
         }
+        public FilterViewModel Filter { get; set; }
     }
 }

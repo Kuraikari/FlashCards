@@ -1,4 +1,5 @@
 ﻿using FlashCards.Enums;
+using FlashCards.Helpers;
 using FlashCards.Models;
 using FlashCards.Models.FlashCards;
 using FlashCards.Services;
@@ -22,7 +23,7 @@ namespace FlashCards.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index(int page = 1, int top = 25)
+        public async Task<IActionResult> Index(int page = 1, int top = 25, int topic = 1, string subtopic = "")
         {
             var flashcardSides                              = await _context.FlashCardSides.ToListAsync();
             var flashcards                                  = await _context.FlashCards.ToListAsync();
@@ -31,7 +32,14 @@ namespace FlashCards.Controllers
                 TotalRecords    = flashcards.Count,
                 PageSize        = top,
                 PageNumber      = page,
-                Data            = flashcards.Skip((page - 1) * top).Take(top).ToList()
+                Data            = flashcards
+                                    .Skip((page - 1) * top)
+                                    .Take(top)
+                                    .FilterByTopics((Topics)topic)
+                                    .FilterBySubTopics(subtopic)
+                                    .ToList(),
+                Filter          = new FilterViewModel(""+topic, subtopic)
+
             };
             ViewBag.Title = "Home";
             return View(viewModel);
@@ -111,12 +119,14 @@ namespace FlashCards.Controllers
             return View();
         }
 
-        public async Task<IActionResult> FlashCard()
+        public async Task<IActionResult> FlashCard(int topic = 1, string subtopic = "Japanese")
         {
             ViewBag.Title = "View";
             var flashcardSides = await _context.FlashCardSides.ToListAsync();
-            var flashcards = await _context.FlashCards.Where(x => x.Topics == Topics.Language).ToListAsync();
-            return View(flashcards);
+            var flashcards = await _context.FlashCards.ToListAsync();
+
+            var result = flashcards.FilterByTopics((Topics) topic).FilterBySubTopics(subtopic).ToList();
+            return View(result);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

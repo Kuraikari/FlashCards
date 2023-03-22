@@ -1,23 +1,25 @@
 ﻿@model IEnumerable<FlashCards.Models.FlashCards.FlashCardModel>
 
-<div class="flashcard-container">
-@foreach (var card in Model)
-{
-    <div class="flashcard">
-        <div class="flashcard-inner">
-            <div class="front">
-                @foreach (var content in card.Front.Content)
-                {
-                    <span>@content</span>
-                }
-            </div>
-            <div class="back">
-                @foreach (var content in card.Back.Content)
-                {
-                    <span>@content</span>
-                }
+<article>
+    <div class="flashcard-container">
+    @foreach (var card in Model)
+    {
+        <div class="flashcard">
+            <div class="flashcard-inner">
+                <div class="front">
+                    @foreach (var content in card.Front.Content)
+                    {
+                        <span>@content</span>
+                    }
+                </div>
+                <div class="back">
+                    @foreach (var content in card.Back.Content)
+                    {
+                        <span>@content</span>
+                    }
+                </div>
             </div>
         </div>
+    }
     </div>
-}
-</div>
+</article>

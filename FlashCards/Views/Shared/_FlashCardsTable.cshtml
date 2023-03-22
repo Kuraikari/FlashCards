@@ -61,21 +61,21 @@
     @if (Model.HasPreviousPage)
     {
         <div class="prev">
-            <a asp-action="Index" asp-route-top="@Model.PageSize" asp-route-page="@(Model.PageNumber - 1)"><span class="pagination-prev"></span></a>
+            <a asp-action="Index" asp-route-top="@Model.PageSize" asp-route-page="@(Model.PageNumber - 1)" asp-route-topic="@Model.Filter.FilterOptions[0]" asp-route-subtopic="@Model.Filter.FilterOptions[1]"><span class="pagination-prev"></span></a>
         </div>
     }
 
     @for (int i = 0; i < Model.TotalPages; i++)
     {
         <div class="pagination-page">
-            <a asp-action="Index" asp-route-top="@Model.PageSize" asp-route-page="@(i + 1)"><span class="dot">@(i + 1)</span></a>
+            <a asp-action="Index" asp-route-top="@Model.PageSize" asp-route-page="@(i + 1)" asp-route-topic="@Model.Filter.FilterOptions[0]" asp-route-subtopic="@Model.Filter.FilterOptions[1]"><span class="dot">@(i + 1)</span></a>
         </div>
     }
 
     @if (Model.HasNextPage)
     {
         <div class="next">
-            <a asp-action="Index" asp-route-top="@Model.PageSize" asp-route-page="@(Model.PageNumber + 1)"><span class="pagination-next"></span></a>
+            <a asp-action="Index" asp-route-top="@Model.PageSize" asp-route-page="@(Model.PageNumber + 1)" asp-route-topic="@Model.Filter.FilterOptions[0]" asp-route-subtopic="@Model.Filter.FilterOptions[1]"><span class="pagination-next"></span></a>
         </div>
     }
 </div>

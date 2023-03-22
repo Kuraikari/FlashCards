@@ -36,9 +36,12 @@
                 <a asp-action="Create" class="btn btn-primary">Create New</a>
             </p>
             <p>
-                <a asp-action="FlashCard" class="btn btn-outline-primary">Flashcard View</a>
+                <a asp-action="FlashCard" asp-route-topic="1" asp-route-subtopic="Japanese" class="btn btn-outline-primary">Flashcard View</a>
             </p>
         </div>
+        @{
+            await Html.RenderPartialAsync("_SearchBar");
+        }
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
