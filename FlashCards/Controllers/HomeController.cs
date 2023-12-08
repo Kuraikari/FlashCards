@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace FlashCards.Controllers
 {
@@ -143,6 +144,13 @@ namespace FlashCards.Controllers
         private bool FlashCardSideExists(int id)
         {
             return _context.FlashCardSides.Any(e => e.Id == id);
+        }
+
+        private JsonResult SubTopics(int topic, string text)
+        {
+
+            var result = Json(text, JsonSerializerOptions.Default);
+            return result;
         }
     }
 }
